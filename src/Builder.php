@@ -27,6 +27,7 @@ class Builder
     protected ?array $fields = null;
 
     protected bool $withAggregations = true;
+    private bool $trackTotalHits = false;
 
     public function __construct(protected Client $client)
     {
@@ -84,6 +85,8 @@ class Builder
         if ($this->from !== null) {
             $params['from'] = $this->from;
         }
+        
+        $params['track_total_hits'] = true;
 
         return $this->client->search($params);
     }
@@ -155,5 +158,22 @@ class Builder
         }
 
         return $payload;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTrackTotalHits(): bool
+    {
+        return $this->trackTotalHits;
+    }
+
+    /**
+     * @param bool $trackTotalHits
+     */
+    public function setTrackTotalHits(bool $trackTotalHits): Builder
+    {
+        $this->trackTotalHits = $trackTotalHits;
+        return $this;
     }
 }
