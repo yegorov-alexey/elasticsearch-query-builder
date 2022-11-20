@@ -85,8 +85,10 @@ class Builder
         if ($this->from !== null) {
             $params['from'] = $this->from;
         }
-        
-        $params['track_total_hits'] = true;
+
+        if ($this->trackTotalHits) {
+            $params['track_total_hits'] = true;
+        }
 
         return $this->client->search($params);
     }
